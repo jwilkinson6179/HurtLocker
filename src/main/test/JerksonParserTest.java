@@ -44,7 +44,7 @@ public class JerksonParserTest
         String[] expected = { "one:2", "three:IV" };
         String input = "one:2;three:IV";
 
-        String[] actual = test.generatePair(input);
+        String[] actual = test.generatePairs(input);
 
         assertEquals(expected, actual);
     }
@@ -55,7 +55,7 @@ public class JerksonParserTest
         String[] expected = { "five:6", "SEVEN:ate", "ninE:10" };
         String input = "five:6^SEVEN:ate*ninE:10";
 
-        String[] actual = test.generatePair(input);
+        String[] actual = test.generatePairs(input);
 
         assertEquals(expected, actual);
     }
@@ -78,6 +78,28 @@ public class JerksonParserTest
         String input = "12.96";
 
         String actual = test.fixCase(input);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void cookieFixerTest()
+    {
+        String expected = "Cookie";
+        String input = "C00Kie";
+
+        String actual = test.cookieFixer(input);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void cookieFixerTwoTest()
+    {
+        String expected = "Cookie";
+        String input = "COOKIE";
+
+        String actual = test.cookieFixer(input);
 
         assertEquals(expected, actual);
     }
