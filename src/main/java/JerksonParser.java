@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -30,6 +31,11 @@ public class JerksonParser
     public String getRawData()
     {
         return rawData;
+    }
+
+    public Integer getErrorCount()
+    {
+        return errorCount;
     }
 
     public String[] createListOfEntries()
@@ -75,22 +81,21 @@ public class JerksonParser
         for(String pair : pairs)
         {
             String[] keyAndValue = separatePair(pair);
-            keyAndValue[0] = fixCase(keyAndValue[0]);
             keyAndValue[0] = cookieFixer(keyAndValue[0]);
 
-            if(keyAndValue[0].equals("Name"))
+            if(matchIgnoreCase(keyAndValue[0], "Name"))
             {
                 name = keyAndValue[1];
             }
-            else if(keyAndValue[0].equals("Price"))
+            else if(matchIgnoreCase(keyAndValue[0], "Price"))
             {
                 price = keyAndValue[1];
             }
-            else if(keyAndValue[0].equals("Type"))
+            else if(matchIgnoreCase(keyAndValue[0], "Type"))
             {
                 type = keyAndValue[1];
             }
-            else if(keyAndValue[0].equals("Expiration"))
+            else if(matchIgnoreCase(keyAndValue[0], "Expiration"))
             {
                 date = keyAndValue[1];
             }
@@ -101,14 +106,12 @@ public class JerksonParser
         return generatedItem;
     }
 
-    // TODO: Make this use regex
-    public String fixCase(String word)
+    public Boolean matchIgnoreCase(String first, String second)
     {
-        word = word.toLowerCase();
-        String firstLetter = word.substring(0, 1);
-        firstLetter = firstLetter.toUpperCase();
+        Pattern pattern = Pattern.compile(first, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(second);
 
-        return firstLetter + word.substring(1);
+        return matcher.matches();
     }
 
     public String cookieFixer(String word)

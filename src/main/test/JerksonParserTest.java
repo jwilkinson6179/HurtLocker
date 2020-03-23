@@ -74,29 +74,12 @@ public class JerksonParserTest
     @Test(expected = IllegalArgumentException.class)
     public void separatePairErrorTest()
     {
+        Integer expected = 1;
         String input = "five:";
 
-        String[] actual = test.separatePair(input);
-    }
+        test.separatePair(input);
 
-    @Test
-    public void fixCaseTest()
-    {
-        String expected = "Expected";
-        String input = "EXPECTED";
-
-        String actual = test.fixCase(input);
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void fixCaseNumbersTest()
-    {
-        String expected = "12.96";
-        String input = "12.96";
-
-        String actual = test.fixCase(input);
+        Integer actual = test.getErrorCount();
 
         assertEquals(expected, actual);
     }
@@ -126,11 +109,51 @@ public class JerksonParserTest
     @Test
     public void generateGroceryItemTest()
     {
-        String expected = "Milk, 3.23, Food, 1/25/2016";
+        String expected = "Milk, 3.23";
         String input = "naMe:Milk;price:3.23;type:Food;expiration:1/25/2016";
         GroceryItem item = test.generateItem(input);
 
         String actual = item.toString();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void matchIgnoreCaseTest()
+    {
+        Boolean expected = true;
+
+        Boolean actual = test.matchIgnoreCase("MILK", "MiLk");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void matchIgnoreCaseTwoTest()
+    {
+        Boolean expected = true;
+
+        Boolean actual = test.matchIgnoreCase("milk", "MIlk");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void matchIgnoreCaseThreeTest()
+    {
+        Boolean expected = false;
+
+        Boolean actual = test.matchIgnoreCase("MILK", "MiLkkkk");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void matchIgnoreCaseFourTest()
+    {
+        Boolean expected = false;
+
+        Boolean actual = test.matchIgnoreCase("MILK", "Apple");
 
         assertEquals(expected, actual);
     }

@@ -56,6 +56,6 @@ public class GroceryItem
     @Override
     public String toString()
     {
-        return name + ", " + price + ", " + type + ", " + expirationDate;
+        return name + ", " + price;
     }
 }
