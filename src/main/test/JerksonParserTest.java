@@ -41,11 +41,22 @@ public class JerksonParserTest
     @Test
     public void generatePairTest()
     {
-        String[] expected = { "one", "2" }
-        String input = "One:2;";
+        String[] expected = { "one:2", "three:IV" };
+        String input = "one:2;three:IV";
 
         String[] actual = test.generatePair(input);
 
-        assertEquals(1, 2);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void generatePairWithEscapedTest()
+    {
+        String[] expected = { "five:6", "SEVEN:ate", "ninE:10" };
+        String input = "five:6^SEVEN:ate*ninE:10";
+
+        String[] actual = test.generatePair(input);
+
+        assertEquals(expected, actual);
     }
 }

@@ -36,6 +36,9 @@ public class JerksonParser
 
     public String[] generatePair(String input)
     {
-        return null;
+        Pattern delimiter = Pattern.compile("[;@%\\*\\^]");
+        String[] pairs = delimiter.split(input);
+
+        return pairs;
     }
 }
