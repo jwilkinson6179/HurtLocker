@@ -61,6 +61,25 @@ public class JerksonParserTest
     }
 
     @Test
+    public void separatePairTest()
+    {
+        String[] expected = {"five",  "7" };
+        String input = "five:7";
+
+        String[] actual = test.separatePair(input);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void separatePairErrorTest()
+    {
+        String input = "five:";
+
+        String[] actual = test.separatePair(input);
+    }
+
+    @Test
     public void fixCaseTest()
     {
         String expected = "Expected";

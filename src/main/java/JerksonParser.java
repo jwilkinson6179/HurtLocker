@@ -53,6 +53,13 @@ public class JerksonParser
         Pattern delimiter = Pattern.compile(":");
         String[] keyAndVal = delimiter.split(pair);
 
+        if(keyAndVal.length != 2)
+        {
+            System.err.println("The key "+ keyAndVal[0] + " has no associated value.");
+            errorCount++;
+            throw new IllegalArgumentException();
+        }
+
         return keyAndVal;
     }
 
@@ -110,6 +117,19 @@ public class JerksonParser
 
         Matcher fixed = cookiePermutation.matcher(word);
         String output = fixed.replaceAll("Cookie");
+
+        return output;
+    }
+
+    public List<GroceryItem> generateGroceryList()
+    {
+        List<GroceryItem> output = new ArrayList<>();
+        String[] entries = createListOfEntries();
+
+        for(String el : entries)
+        {
+            output.add(generateItem(el));
+        }
 
         return output;
     }
