@@ -59,4 +59,26 @@ public class JerksonParserTest
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void fixCaseTest()
+    {
+        String expected = "Expected";
+        String input = "EXPECTED";
+
+        String actual = test.fixCase(input);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void fixCaseNumbersTest()
+    {
+        String expected = "12.96";
+        String input = "12.96";
+
+        String actual = test.fixCase(input);
+
+        assertEquals(expected, actual);
+    }
 }
