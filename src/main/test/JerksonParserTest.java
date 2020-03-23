@@ -2,6 +2,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 public class JerksonParserTest
@@ -156,5 +158,30 @@ public class JerksonParserTest
         Boolean actual = test.matchIgnoreCase("MILK", "Apple");
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void generateGroceryList()
+    {
+        String expected0 = "Milk, 3.33";
+        String expected1 = "Bread, 2.22";
+        String expected2 = "Cookies, 1.11";
+
+        String input = "naMe:Milk;price:3.33;type:Food;expiration:1/25/2016##" +
+                "name:Bread;price:2.22;TYPE:FOOD;expiration:1/1/2011##" +
+                "NAME:Cookies;price:1.11;type:food;expiration:3/13/2019##";
+
+        test.setRawData(input);
+        ArrayList<GroceryItem> actual = test.generateGroceryList();
+
+        assertEquals(expected0, actual.get(0).toString());
+        assertEquals(expected1, actual.get(1).toString());
+        assertEquals(expected2, actual.get(2).toString());
+    }
+
+    @Test
+    public void printTest()
+    {
+        test.printList();
     }
 }

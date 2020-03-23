@@ -8,8 +8,9 @@ import java.util.regex.Pattern;
 public class JerksonParser
 {
     String rawData;
-    Integer errorCount;
     List<GroceryItem> groceryList;
+    Integer errorCount;
+    // Should Map here instead of groceryList but out of time
 
     public JerksonParser(String initialRawData)
     {
@@ -80,7 +81,13 @@ public class JerksonParser
 
         for(String pair : pairs)
         {
-            String[] keyAndValue = separatePair(pair);
+            String[] keyAndValue = new String[2];
+            try{
+                keyAndValue = separatePair(pair);
+            } catch(Exception e)
+            {
+
+            }
             keyAndValue[0] = cookieFixer(keyAndValue[0]);
 
             if(matchIgnoreCase(keyAndValue[0], "Name"))
@@ -124,9 +131,9 @@ public class JerksonParser
         return output;
     }
 
-    public List<GroceryItem> generateGroceryList()
+    public ArrayList<GroceryItem> generateGroceryList()
     {
-        List<GroceryItem> output = new ArrayList<>();
+        ArrayList<GroceryItem> output = new ArrayList<>();
         String[] entries = createListOfEntries();
 
         for(String el : entries)
@@ -135,5 +142,22 @@ public class JerksonParser
         }
 
         return output;
+    }
+
+    // Planned to track items+price in a map, then use that map to print results
+    public void printList()
+    {
+//        ArrayList<GroceryItem> groceryList = generateGroceryList();
+        Map<String, Integer> itemAtPriceCount = new HashMap<>();
+        StringBuilder output = new StringBuilder();
+
+//        for(Integer i = 0; i < groceryList.size(); i++)
+//        {
+//            String itemAndPrice = groceryList.get(0).toString();
+//        }
+        output.append(String.format("\nname: %s\t\t\tseen: %d times", "Phold", 1));
+        output.append(String.format("\n=============\t\t============="));
+        output.append(String.format("\nErrors\t\t\t\tseen: %d times\n", errorCount));
+        System.out.println(output.toString());
     }
 }
