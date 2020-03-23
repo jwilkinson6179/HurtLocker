@@ -11,12 +11,18 @@ public class JerksonParser
     List<GroceryItem> groceryList;
     Integer errorCount;
     // Should Map here instead of groceryList but out of time
+    // Maybe even map that's <<K,V>, V> of <<name, price> occurrences>
+    // Alongside map of <K, V> for <name, occurrences>
+    // Approached this the wrong way.  Didn't think how I was organizing
+    // data well enough.  Should have done that first.
+    Map<String, Integer> itemCount;
 
     public JerksonParser(String initialRawData)
     {
         this.rawData = initialRawData;
         this.errorCount = 0;
         groceryList = new ArrayList<>();
+        itemCount = new HashMap<>();
     }
 
     public JerksonParser()
@@ -93,6 +99,54 @@ public class JerksonParser
             if(matchIgnoreCase(keyAndValue[0], "Name"))
             {
                 name = keyAndValue[1];
+                if(matchIgnoreCase(keyAndValue[0], "Milk"))
+                {
+                    if(!itemCount.containsKey("Milk"))
+                    {
+                        itemCount.putIfAbsent("Milk", 1);
+                    }
+                    else
+                    {
+                        Integer currentCount = itemCount.get("Milk");
+                        itemCount.put("Milk", currentCount + 1);
+                    }
+                }
+                else if(matchIgnoreCase(keyAndValue[0], "Bread"))
+                {
+                    if(!itemCount.containsKey("Bread"))
+                    {
+                        itemCount.putIfAbsent("Bread", 1);
+                    }
+                    else
+                    {
+                        Integer currentCount = itemCount.get("Bread");
+                        itemCount.put("Bread", currentCount + 1);
+                    }
+                }
+                else if(matchIgnoreCase(keyAndValue[0], "Cookies"))
+                {
+                    if(!itemCount.containsKey("Cookies"))
+                    {
+                        itemCount.putIfAbsent("Cookies", 1);
+                    }
+                    else
+                    {
+                        Integer currentCount = itemCount.get("Cookies");
+                        itemCount.put("Cookies", currentCount + 1);
+                    }
+                }
+                else if(matchIgnoreCase(keyAndValue[0], "Apples"))
+                {
+                    if(!itemCount.containsKey("Apples"))
+                    {
+                        itemCount.putIfAbsent("Apples", 1);
+                    }
+                    else
+                    {
+                        Integer currentCount = itemCount.get("Apples");
+                        itemCount.put("Apples", currentCount + 1);
+                    }
+                }
             }
             else if(matchIgnoreCase(keyAndValue[0], "Price"))
             {
@@ -160,4 +214,5 @@ public class JerksonParser
         output.append(String.format("\nErrors\t\t\t\tseen: %d times\n", errorCount));
         System.out.println(output.toString());
     }
+    // Make an object that tracks by name, has a count, and then has a map of <k, v> as <price, occurrences>
 }
