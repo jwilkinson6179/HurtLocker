@@ -103,4 +103,16 @@ public class JerksonParserTest
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void generateGroceryItemTest()
+    {
+        String expected = "Milk, 3.23, Food, 1/25/2016";
+        String input = "naMe:Milk;price:3.23;type:Food;expiration:1/25/2016";
+        GroceryItem item = test.generateItem(input);
+
+        String actual = item.toString();
+
+        assertEquals(expected, actual);
+    }
 }

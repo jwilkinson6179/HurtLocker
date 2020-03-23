@@ -2,12 +2,14 @@ public class GroceryItem
 {
     String name;
     String price;
+    String type;
     String expirationDate;
 
-    public GroceryItem(String name, String price, String expirationDate)
+    public GroceryItem(String name, String price, String type, String expirationDate)
     {
         this.name = name;
         this.price = price;
+        this.type = type;
         this.expirationDate = expirationDate;
     }
 
@@ -31,6 +33,16 @@ public class GroceryItem
         this.price = price;
     }
 
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
+    }
+
     public String getExpirationDate()
     {
         return expirationDate;
@@ -39,5 +51,11 @@ public class GroceryItem
     public void setExpirationDate(String expirationDate)
     {
         this.expirationDate = expirationDate;
+    }
+
+    @Override
+    public String toString()
+    {
+        return name + ", " + price + ", " + type + ", " + expirationDate;
     }
 }

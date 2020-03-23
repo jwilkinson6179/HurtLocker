@@ -62,11 +62,15 @@ public class JerksonParser
         String[] pairs = generatePairs(entry);
         String name = "";
         String price = "";
+        String type = "";
         String date = "";
 
         for(String pair : pairs)
         {
             String[] keyAndValue = separatePair(pair);
+            keyAndValue[0] = fixCase(keyAndValue[0]);
+            keyAndValue[0] = cookieFixer(keyAndValue[0]);
+
             if(keyAndValue[0].equals("Name"))
             {
                 name = keyAndValue[1];
@@ -75,13 +79,17 @@ public class JerksonParser
             {
                 price = keyAndValue[1];
             }
+            else if(keyAndValue[0].equals("Type"))
+            {
+                type = keyAndValue[1];
+            }
             else if(keyAndValue[0].equals("Expiration"))
             {
                 date = keyAndValue[1];
             }
         }
 
-        generatedItem = new GroceryItem(name, price, date);
+        generatedItem = new GroceryItem(name, price, type, date);
 
         return generatedItem;
     }
